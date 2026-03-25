@@ -1,0 +1,35 @@
+command /spawnboss:
+	permission: AT
+	trigger:
+		spawn zombie at location of player
+		set max health of last spawned zombie to 55
+		set health of last spawned zombie to 55
+		set display name of last spawned zombie to "&cZombík"
+       
+on damage:
+	if attacker is zombie:
+		if name of attacker is "&cZombík":
+			if victim is player:
+				chance of 50%:
+					apply nausea to victim for 10 seconds 
+				chance of 15%:
+					apply strength 5 to attacker for 5 seconds
+				chance of 5%:
+					loop 3 times:
+						spawn zombie at location of attacker
+						set max health of last spawned zombie to 1
+						set health of last spawned zombie to 1
+						set display name of last spawned zombie to "&cKlon Zombíka"
+                
+                
+                
+on death of zombie:
+	if name of victim is "&cZombík":
+		if attacker is player:
+			clear drops
+			drop carrot named "&fMagic Carrot"
+            
+on death of zombie:
+	if name of victim is "&cKlon Zombíka":
+		if attacker is player:
+			clear drops
