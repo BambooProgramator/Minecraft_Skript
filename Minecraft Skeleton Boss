@@ -1,0 +1,53 @@
+command /skeletonboss:
+	permission: AT
+	trigger:
+		spawn a skeleton at location 13535.30, 65.00, 5012.96 in world "Theia"
+		set maximum health of last spawned skeleton to 250
+		set health of last spawned skeleton to 250
+		set display name of last spawned skeleton to "&e&lLone Bone Guardian"
+		set chestplate of last spawned skeleton to leather chestplate
+		set {_strenghtlimit} to false
+		set {_countstrenghtlimit} to 0
+
+on damage:
+	if attacker is a skeleton:
+		if name of attacker is "&e&lLone Bone Guardian":
+			chance of 60%:
+				loop 5 times:
+					spawn a silverfish at location of victim
+			chance of 50%:
+				set {_strenghtplus} to 0
+				loop 3 times:
+					if {_strenghtlimit} is false:
+						add 1 to {_strenghtplus}
+                        
+					if {_strenghtlimit} is true:
+						remove 1 from {_strenghtplus}
+                        
+                        
+					spawn a stray at location of attacker 
+					set maximum health of last spawned stray to 50
+					set health of last spawned stray to 50
+					set display name of last spawned stray to "&e&lSpectral Bone Guardians"
+					set helmet of last spawned stray to leather cap
+					loop {_strenghtplus} times:
+						wait 1 second
+						apply strength 5 to last spawned stray for 1 seconds
+                    
+                    
+on damage:
+	if attacker is player:
+		if victim is a skeleton:
+			if name of attacker is "&e&lLone Bone Guardian":
+				add 1 to {_countstrenghtlimit}
+				if {_countstrenghtlimit} is 5:
+					set {_strenghtlimit} to true
+					loop {_countstrenghtlimit} times:
+						set {_strenghtlimit} to true
+                    
+				if {_countstrenghtlimit} is more than 15:
+					set {_countstrenghtlimit} to 0
+					loop 60 times:
+						set {_countstrenghtlimit} to 0
+						wait a second
+						set {_countstrenghtlimit} to 0
